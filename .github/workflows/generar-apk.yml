@@ -1,0 +1,62 @@
+name: Generar APK Android
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Preparar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Instalar dependencias de la web y Capacitor
+        run: npm install --legacy-peer-deps --no-save @capacitor/cli@7 @capacitor/core@7 @capacitor/android@7
+
+      - name: Compilar la web
+        run: npm run build
+
+      - name: Configurar aplicación Android
+        run: |
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.ruizortizdaniel.patrulla",
+            "appName": "Cuadrante Patrullas",
+            "webDir": "dist",
+            "server": {
+              "url": "https://ais-pre-oqlkncyynuxvmequimepfy-650652568102.europe-west2.run.app/",
+              "cleartext": false,
+              "allowNavigation": [
+                "ais-pre-oqlkncyynuxvmequimepfy-650652568102.europe-west2.run.app"
+              ]
+            }
+          }
+          EOF
+          npx cap add android
+          npx cap sync android
+
+      - name: Compilar APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Guardar APK para descargar
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cuadrante-Patrullas-APK
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
