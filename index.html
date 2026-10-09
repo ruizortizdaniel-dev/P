@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cuadrante de Patrullas Bidireccional</title>
+    <meta name="description" content="Gestión y edición bidireccional de cuadrantes de turnos para 4 patrullas y efectivos individuales con alerta de solapamientos." />
+    <meta property="og:title" content="Cuadrante de Patrullas Bidireccional" />
+    <meta property="og:description" content="Gestión y edición bidireccional de cuadrantes de turnos para 4 patrullas y efectivos individuales con alerta de solapamientos." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- PWA & Mobile Installability -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1e3a8a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="CuadranteADIF" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Auto-clean stale app bundle caches while strictly preserving persistent railway PK data -->
+    <script>
+      if ('caches' in window) {
+        caches.keys().then(function(names) {
+          for (var i = 0; i < names.length; i++) {
+            // NEVER delete adif-pk caches holding the 12,000 KMZ points
+            if (names[i] && !names[i].startsWith('adif-pk-')) {
+              caches.delete(names[i]);
+            }
+          }
+        });
+      }
+      window.addEventListener('vite:preloadError', function(event) {
+        window.location.reload();
+      });
+    </script>
+  </head>
+  <body class="bg-slate-100 text-slate-900 font-['Plus_Jakarta_Sans',sans-serif] antialiased selection:bg-blue-200 selection:text-blue-900">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Register PWA Service Worker for standalone install -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(function(reg) {
+          reg.update();
+        }).catch(function(err) {
+          console.log('SW registration error:', err);
+        });
+      }
+    </script>
+  </body>
+</html>

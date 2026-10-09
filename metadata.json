@@ -1,0 +1,6 @@
+{
+  "name": "Cuadrante de Patrullas Bidireccional",
+  "description": "Gestión y edición bidireccional de cuadrantes de turnos para 4 patrullas y efectivos individuales con alerta de solapamientos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

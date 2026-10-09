@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* Tabular numbers for all matrices */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ========================================================= */
+/* OFFICIAL A4 LANDSCAPE PRINT STYLESHEET (EXACT PDF FORMAT)  */
+/* ========================================================= */
+
+@page {
+  size: A4 landscape;
+  margin: 6mm 5mm 6mm 5mm;
+}
+
+@media print {
+  /* Strictly hide all UI navigation, banners, buttons, toolbars, modals */
+  header,
+  nav,
+  button,
+  .no-print,
+  [role="dialog"],
+  .fixed,
+  .sticky,
+  .interactive-tutorial,
+  input,
+  select {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Reset document for clean paper print */
+  html, body {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 8pt !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #root {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* The official PDF document sheet */
+  .official-pdf-sheet {
+    display: block !important;
+    visibility: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Force table to fit exactly 100% of A4 landscape width without horizontal scroll */
+  .overflow-x-auto {
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1.5px solid #000000 !important;
+    table-layout: fixed !important;
+    font-size: 7.5pt !important;
+  }
+
+  th, td {
+    border: 1px solid #000000 !important;
+    padding: 1px 1.5px !important;
+    color: #000000 !important;
+    vertical-align: middle !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  /* Exact cell time text in print */
+  td div {
+    line-height: 1.05 !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+    height: auto !important;
+  }
+
+  /* Shading for weekends and headers */
+  thead tr {
+    background-color: #f1f5f9 !important;
+  }
+
+  tfoot tr {
+    background-color: #f8fafc !important;
+  }
+
+  /* High-contrast borders */
+  .border-black {
+    border-color: #000000 !important;
+  }
+}
